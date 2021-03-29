@@ -6,7 +6,19 @@ async function run() {
     // Define the label to use to track changes
     const changedLabelName = core.getInput('changed-label');
     const qualifyingLabelNames = core.getInput('qualifying-labels').split(',');
-    
+
+    // Debugs
+    core.debug("github.event:" & github.event);
+    core.debug("github.event:" & github.event_name);
+    core.debug("github.event:" & github.event.action);
+    core.debug("github.event:" & github.context);
+    core.debug("github.event:" & github.context.event);
+    core.debug("github.event:" & github.context.event_name);
+    core.debug("github.event:" & github.context.changes);
+    core.debug("github.event:" & github.context.label);
+    core.debug("github.event:" & github.context.label.name);
+    // End debugs
+
     // Check whether the card on the project board merely moved within a column and skip if so
     // Also check if the label being used to track changes was unlabeled and skip if so to avoid a loop
     // Also check if the qualifying labels were unlabeled or labeled and skip
