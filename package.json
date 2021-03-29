@@ -1,7 +1,7 @@
 {
-  "name": "javascript-action",
+  "name": "issue-change-labeler",
   "version": "1.0.0",
-  "description": "JavaScript Action Template",
+  "description": "A GitHub Action to label an issue if it has been modified is some way.",
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
@@ -11,25 +11,26 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/javascript-action.git"
+    "url": "git+https://github.com/alexcnichols/issue-change-labeler.git"
   },
   "keywords": [
     "GitHub",
     "Actions",
     "JavaScript"
   ],
-  "author": "",
+  "author": "alexcnichols",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/actions/javascript-action/issues"
+    "url": "https://github.com/alexcnichols/issue-change-labeler/issues"
   },
-  "homepage": "https://github.com/actions/javascript-action#readme",
+  "homepage": "https://github.com/alexcnichols/issue-change-labeler#readme",
   "dependencies": {
-    "@actions/core": "^1.2.5"
+    "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.27.0",
-    "eslint": "^7.4.0",
+    "eslint": "^7.23.0",
     "jest": "^26.6.3"
   }
 }

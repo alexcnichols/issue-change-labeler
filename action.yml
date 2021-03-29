@@ -1,13 +1,17 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: 'Issue change labeler'
+description: 'Label an issue if it has been modified in some way.'
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
+  changed-label:
+    description: 'Label to track that an issue has been changed'
     required: true
-    default: '1000'
-outputs:
-  time: # output will be available to future steps
-    description: 'The message to output'
+    default: 'changed'
+  qualifying-labels:
+    description: 'Label(s) that must be on the issue already in order for changed labeling to trigger'
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
+branding:
+  icon: check-circle
+  color: gray-dark
+  

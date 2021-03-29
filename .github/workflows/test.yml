@@ -1,4 +1,4 @@
-name: "units-test"
+name: "unit-tests"
 on:
   pull_request:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   # unit tests
-  units:
+  ci:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -21,5 +21,3 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: ./
-      with:
-        milliseconds: 1000
