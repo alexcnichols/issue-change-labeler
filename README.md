@@ -16,7 +16,8 @@ Create a workflow `.yml` file in your repositories `.github/workflows` directory
 
 ### Inputs
 
-- `assigneeFilter`: Optional. A comma separated list of usernames to notify when an issue they are assigned to moves between project columns.
+- `changed-label`: Required. Default `changed`. The label to track that an issue has been changed.
+- `qualifying-labels`: Optional. The comma-separated list of label(s) that must be on the issue already in order for changed labeling to trigger.
 
 ### Example workflow
 
