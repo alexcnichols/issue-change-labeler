@@ -15,15 +15,14 @@ async function run() {
     const qualifyingLabelNames = core.getInput('qualifying-labels').split(',');
 
     // Debugs
-    core.debug("github.event:" & github.event);
-    core.debug("github.event:" & github.event_name);
-    //core.debug("github.event:" & github.event.action);
-    core.debug("github.event:" & github.context);
-    core.debug("github.event:" & github.context.event);
-    core.debug("github.event:" & github.context.event_name);
-    core.debug("github.event:" & github.context.changes);
-    core.debug("github.event:" & github.context.label);
-    core.debug("github.event:" & github.context.label.name);
+    core.debug(`github.event: '${github.event}'`);
+    core.debug(`github.event_name: '${github.event_name}'`);
+    core.debug(`github.context: '${github.context}'`);
+    core.debug(`github.context.event: '${github.context.event}'`);
+    core.debug(`github.context.event_name: '${github.context.event_name}'`);
+    core.debug(`github.context.changes: '${github.context.changes}'`);
+    core.debug(`github.context.label: '${github.context.label}'`);
+    core.debug(`github.event: '${github.event}'`);
     // End debugs
 
     // Check whether the card on the project board merely moved within a column and skip if so
