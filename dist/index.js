@@ -17,7 +17,7 @@ async function run() {
     // Debugs
     core.debug("github.event:" & github.event);
     core.debug("github.event:" & github.event_name);
-    core.debug("github.event:" & github.event.action);
+    //core.debug("github.event:" & github.event.action);
     core.debug("github.event:" & github.context);
     core.debug("github.event:" & github.context.event);
     core.debug("github.event:" & github.context.event_name);
