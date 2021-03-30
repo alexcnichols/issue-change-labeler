@@ -14,53 +14,48 @@ async function run() {
     const changedLabelName = core.getInput('changed-label');
     const qualifyingLabelNames = core.getInput('qualifying-labels').split(',');
 
-    // Debugs
-    core.debug(`github.context.payload.action: '${github.context.payload.action}'`);
-    core.debug(`github.context.payload.changes: '${github.context.payload.changes}'`);
-    core.debug(`github.context.payload.label.name: '${github.context.payload.label.name}'`);
-    core.debug(`github.context.eventName: '${github.context.eventName}'`);
-    //
-    core.debug(`github.context.event_name: '${github.context.event_name}'`);
-    core.debug(`github.context.changes: '${github.context.changes}'`);
-    core.debug(`github.context.label: '${github.context.label}'`);
-    core.debug(`github.context.action: '${github.context.action}'`);
-    core.debug(`github.context.workflow: '${github.context.workflow}'`);
-    // End debugs
-
     // Check whether appropriate workflow triggers
-    if (!['issues', 'project_card'].includes(github.context.eventName)) {
+    if (!['issues', 'project_card'].includes(eventName)) {
       core.info(`Skipping since the workflow is only compatible with 'issues' and 'project_card' triggers.`);
       return;
     }
 
+    // Pull from context
+    const actionName = github.context.payload.action;
+    const eventName = github.context.eventName;
+    const changes = github.context.payload.changes;
+    const label = github.context.payload.label;
+    const issue = github.context.payload.issue;
+    const projectCard = github.context.payload.project_card;
+
     // Check whether the card on the project board merely moved within a column and skip if so
     // Also check if the label being used to track changes was unlabeled and skip if so to avoid a loop
     // Also check if the qualifying labels were unlabeled or labeled and skip
-    if (github.event.action == 'moved' && github.event.changes === undefined) {
+    if (actionName == 'moved' && changes === undefined) {
       core.info(`Skipping since the card merely moved within the same project board column.`);
       return;
-    } else if (github.event.action == 'unlabeled' && github.event.label.name == changedLabelName) {
-      core.info(`Skipping since the '${github.event.label.name}' label was removed.`);
+    } else if (actionName == 'unlabeled' && label.name == changedLabelName) {
+      core.info(`Skipping since the '${label.name}' label was removed.`);
       return;
-    } else if (github.event.action == 'unlabeled' && qualifyingLabelNames.includes(github.event.label.name)) {
-      core.info(`Skipping since the '${github.event.label.name}' exempt label was removed.`);
+    } else if (actionName == 'unlabeled' && qualifyingLabelNames.includes(label.name)) {
+      core.info(`Skipping since the '${label.name}' exempt label was removed.`);
       return;
-    } else if (github.event.action == 'labeled' && qualifyingLabelNames.includes(github.event.label.name)) {
-      core.info(`Skipping since the '${github.event.label.name}' exempt label was applied.`);
+    } else if (actionName == 'labeled' && qualifyingLabelNames.includes(label.name)) {
+      core.info(`Skipping since the '${label.name}' exempt label was applied.`);
       return;
     } else {
-      core.info(`A '${github.event_name}.${github.event.action}' event action has been triggered.`);
+      core.info(`A '${eventName}.${actionName}' event action has been triggered.`);
     }
     
     // Get the issue number from the issue change or project board card change
     var issueNumber;
-    if (github.context.payload.issue !== undefined) {
-      issueNumber = github.context.payload.issue.number;
+    if (issue !== undefined) {
+      issueNumber = issue.number;
     } else if (
-      github.context.payload.project_card !== undefined &&
-      github.context.payload.project_card.content_url
+      projectCard !== undefined &&
+      projectCard.content_url
     ) {
-      issueNumber = github.context.payload.project_card.content_url.split("/").pop();
+      issueNumber = projectCard.content_url.split("/").pop();
     } else {
       core.setFailed("Unable to determine issue number.");
       return;
