@@ -13,9 +13,12 @@ async function run() {
     core.debug(`github.context: '${github.context}'`);
     core.debug(`github.context.event: '${github.context.event}'`);
     core.debug(`github.context.event_name: '${github.context.event_name}'`);
+    core.debug(`github.context.eventName: '${github.context.eventName}'`);
     core.debug(`github.context.changes: '${github.context.changes}'`);
     core.debug(`github.context.label: '${github.context.label}'`);
-    core.debug(`github.event: '${github.event}'`);
+    core.debug(`github.context.action: '${github.context.action}'`);
+    core.debug(`github.context.workflow: '${github.context.workflow}'`);
+    core.debug(`github.context.payload.changes: '${github.context.payload.changes}'`);
     // End debugs
 
     // Check whether the card on the project board merely moved within a column and skip if so
