@@ -1,6 +1,9 @@
 name: 'Issue change labeler'
 description: 'Label an issue if it has been modified in some way.'
 inputs:
+  github-token: 
+    description: 'A GitHub authentication token'
+    required: true
   changed-label:
     description: 'Label to track that an issue has been changed'
     required: true

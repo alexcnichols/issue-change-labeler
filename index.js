@@ -4,6 +4,7 @@ const github = require('@actions/github');
 async function run() {
   try {
     // Define the label to use to track changes
+    const token = core.getInput('github-token');
     const changedLabelName = core.getInput('changed-label');
     const qualifyingLabelNames = core.getInput('qualifying-labels').split(',');
     const eventName = github.context.eventName;
@@ -20,6 +21,7 @@ async function run() {
     const label = github.context.payload.label;
     const issue = github.context.payload.issue;
     const projectCard = github.context.payload.project_card;
+    const repo = github.context.repo;
 
     // Check whether the card on the project board merely moved within a column and skip if so
     // Also check if the label being used to track changes was unlabeled and skip if so to avoid a loop
@@ -54,8 +56,11 @@ async function run() {
       return;
     }
     
+    // Get Octokit
+    const octokit = github.getOctokit(token);
+
     // Check if at least one of the exempt label(s) are already on the issue
-    const { data: existingLabels } = await github.issues.listLabelsOnIssue({
+    const { data: existingLabels } = await octokit.issues.listLabelsOnIssue({
       issue_number: issueNumber,
       owner: github.context.repo.owner,
       repo: github.context.repo.repo,
@@ -70,10 +75,10 @@ async function run() {
     }
     
     // Apply the label for tracking changes to the issue
-    await github.issues.addLabels({
+    await octokit.issues.addLabels({
       issue_number: issueNumber,
-      owner: github.context.repo.owner,
-      repo: github.context.repo.repo,
+      owner: repo.owner,
+      repo: repo.repo,
       labels: [changedLabelName],
     });
     core.info(`The '${changedLabelName}' label was applied to issue #${issueNumber}.`);
