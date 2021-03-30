@@ -26,7 +26,15 @@ async function run() {
     core.debug(`github.context.action: '${github.context.action}'`);
     core.debug(`github.context.workflow: '${github.context.workflow}'`);
     core.debug(`github.context.payload.changes: '${github.context.payload.changes}'`);
+    core.debug(`github.context.payload.action: '${github.context.payload.action}'`);
+    core.debug(`github.context.payload.sender.type: '${github.context.payload.sender.type}'`);
     // End debugs
+
+    // Check whether appropriate workflow triggers
+    if (!['issues', 'project_card'].includes(github.context.eventName)) {
+      core.info(`Skipping since the workflow is only compatible with 'issues' and 'project_card' triggers.`);
+      return;
+    }
 
     // Check whether the card on the project board merely moved within a column and skip if so
     // Also check if the label being used to track changes was unlabeled and skip if so to avoid a loop
