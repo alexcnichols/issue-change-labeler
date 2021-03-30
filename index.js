@@ -8,19 +8,16 @@ async function run() {
     const qualifyingLabelNames = core.getInput('qualifying-labels').split(',');
 
     // Debugs
-    core.debug(`github.event: '${github.event}'`);
-    core.debug(`github.event_name: '${github.event_name}'`);
-    core.debug(`github.context: '${github.context}'`);
-    core.debug(`github.context.event: '${github.context.event}'`);
-    core.debug(`github.context.event_name: '${github.context.event_name}'`);
+    core.debug(`github.context.payload.action: '${github.context.payload.action}'`);
+    core.debug(`github.context.payload.changes: '${github.context.payload.changes}'`);
+    core.debug(`github.context.payload.label.name: '${github.context.payload.label.name}'`);
     core.debug(`github.context.eventName: '${github.context.eventName}'`);
+    //
+    core.debug(`github.context.event_name: '${github.context.event_name}'`);
     core.debug(`github.context.changes: '${github.context.changes}'`);
     core.debug(`github.context.label: '${github.context.label}'`);
     core.debug(`github.context.action: '${github.context.action}'`);
     core.debug(`github.context.workflow: '${github.context.workflow}'`);
-    core.debug(`github.context.payload.changes: '${github.context.payload.changes}'`);
-    core.debug(`github.context.payload.action: '${github.context.payload.action}'`);
-    core.debug(`github.context.payload.sender.type: '${github.context.payload.sender.type}'`);
     // End debugs
 
     // Check whether appropriate workflow triggers
