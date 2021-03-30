@@ -13,6 +13,7 @@ async function run() {
     // Define the label to use to track changes
     const changedLabelName = core.getInput('changed-label');
     const qualifyingLabelNames = core.getInput('qualifying-labels').split(',');
+    const eventName = github.context.eventName;
 
     // Check whether appropriate workflow triggers
     if (!['issues', 'project_card'].includes(eventName)) {
@@ -22,7 +23,6 @@ async function run() {
 
     // Pull from context
     const actionName = github.context.payload.action;
-    const eventName = github.context.eventName;
     const changes = github.context.payload.changes;
     const label = github.context.payload.label;
     const issue = github.context.payload.issue;
