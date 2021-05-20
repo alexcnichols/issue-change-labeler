@@ -15,7 +15,7 @@ async function run() {
     const changedLabelName = core.getInput('changed-label');
     const qualifyingLabelNames = core.getInput('qualifying-labels').split(',');
     const eventName = github.context.eventName;
-
+core.info(github.context);
     // Check whether appropriate workflow triggers
     if (!['issues', 'project_card'].includes(eventName)) {
       core.info(`Skipping since the workflow is only compatible with 'issues' and 'project_card' triggers.`);
