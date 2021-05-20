@@ -24,12 +24,14 @@ async function run() {
     const repo = github.context.repo;
 
     // Check whether the card on the project board merely moved within a column and skip if so
-    // TODO: label.name fails if the unlabeled event action was triggered by the deletion of a label
-    core.info(changes);
     // Also check if the label being used to track changes was unlabeled and skip if so to avoid a loop
     // Also check if the qualifying labels were unlabeled or labeled and skip
     if (actionName == 'moved' && changes === undefined) {
       core.info(`Skipping since the card merely moved within the same project board column.`);
+      return;
+    } else if (actionName == 'unlabeled' && label === undefined) {
+      // TODO: label.name fails if the unlabeled event action was triggered by the deletion of a label. Ideally this should be a valid scenario.
+      core.warning(`Skipping since a label was removed because a label was deleted. Manual checks required.`);
       return;
     } else if (actionName == 'unlabeled' && label.name == changedLabelName) {
       core.info(`Skipping since the '${label.name}' label was removed.`);
