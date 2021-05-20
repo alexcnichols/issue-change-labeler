@@ -25,6 +25,7 @@ async function run() {
 
     // Check whether the card on the project board merely moved within a column and skip if so
     // TODO: label.name fails if the unlabeled event action was triggered by the deletion of a label
+    core.info(changes);
     // Also check if the label being used to track changes was unlabeled and skip if so to avoid a loop
     // Also check if the qualifying labels were unlabeled or labeled and skip
     if (actionName == 'moved' && changes === undefined) {
