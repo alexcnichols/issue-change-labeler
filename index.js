@@ -9,6 +9,9 @@ async function run() {
     const qualifyingLabelNames = core.getInput('qualifying-labels').split(',');
     const eventName = github.context.eventName;
     const actionName = github.context.action;
+core.info(actionName);
+const actionName2 = github.context.payload.action;
+core.info(actionName2);
 
     // Check whether appropriate workflow triggers and actions
     if (!['issues', 'project_card'].includes(eventName)) {
