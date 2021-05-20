@@ -15,16 +15,21 @@ async function run() {
     const changedLabelName = core.getInput('changed-label');
     const qualifyingLabelNames = core.getInput('qualifying-labels').split(',');
     const eventName = github.context.eventName;
-core.info(github.context.action);
-core.info(github.context.actionName);
-    // Check whether appropriate workflow triggers
+    const actionName = github.context.actionName;
+
+    // Check whether appropriate workflow triggers and actions
     if (!['issues', 'project_card'].includes(eventName)) {
       core.info(`Skipping since the workflow is only compatible with 'issues' and 'project_card' triggers.`);
+      return;
+    } else if ('issues' === eventName && !['edited', 'labeled', 'unlabeled'].includes(actionName)) {
+      core.info(`Skipping since the workflow is only compatible with the 'edited', 'labeled', and 'unlabeled' actions for the 'issues' trigger.`);
+      return;
+    } else if ('project_card' === eventName && !['moved', 'deleted'].includes(actionName)) {
+      core.info(`Skipping since the workflow is only compatible with the 'moved' and 'deleted' actions for the 'project_card' trigger.`);
       return;
     }
 
     // Pull from context
-    const actionName = github.context.payload.action;
     const changes = github.context.payload.changes;
     const label = github.context.payload.label;
     const issue = github.context.payload.issue;
